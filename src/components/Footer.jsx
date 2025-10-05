@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <div className="grid lg:grid-cols-4 bg-gradient-to-r from-indigo-500 to-purple-500 px-20 py-10 justify-start items-start gap-8 text-white">
+    <div className="grid lg:grid-cols-4 bg-gradient-to-r from-indigo-500 to-purple-500 px-20 py-10 justify-start items-start gap-8 text-white ">
       {/* Brand Section */}
       <div className="col-span-1 space-y-3">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-200 to-purple-200 bg-clip-text text-transparent drop-shadow-[0_0_2px_black]">

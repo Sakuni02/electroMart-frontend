@@ -15,32 +15,16 @@ function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMobileMenu = () => setIsMenuOpen(false);
 
-  const desktopLinks = [
-    { path: "/shop/smartphones", label: "Smartphones" },
-    { path: "/shop/accssessories", label: "Accessories" },
-    { path: "/shop/audio", label: "Audio" },
-    { path: "/shop/cases", label: "Cases" },
-    { path: "/shop/charges", label: "Charges" },
-  ];
-
-  const mobileLinks = [
-    { path: "/shop/shoes", label: "Shoes" },
-    { path: "/shop/tshirts", label: "T-Shirt" },
-    { path: "/shop/shorts", label: "Shorts" },
-    { path: "/shop/pants", label: "Pants" },
-    { path: "/shop/socks", label: "Socks" },
-  ];
-
   return (
     <header className="sticky top-0 z-20 w-full border-b border-border bg-white/30 backdrop-blur-lg dark:bg-neutral-800/30">
       <div className="container flex h-16 items-center justify-between px-10 md:px-20">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500"></div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
             ElectroMart
           </h1>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
@@ -71,13 +55,13 @@ function Navigation() {
             },
           ].map((item) => {
             return (
-              <a
+              <Link
                 key={item.path}
-                href={item.path}
+                to={item.path}
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </nav>
@@ -96,14 +80,14 @@ function Navigation() {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex items-center gap-2">
-          <a href="/cart">
+          <Link to="/cart">
             <Button variant="ghost" size="icon">
               <ShoppingCart className="h-4 w-4" />
             </Button>
-          </a>
+          </Link>
 
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 className="flex items-center px-3 py-2 rounded-md border"
@@ -200,28 +184,28 @@ function Navigation() {
               label: "Charges",
             },
           ].map((item) => (
-            <a
+            <Link
               key={item.path}
-              href={item.path}
+              to={item.path}
               className="block text-sm font-medium text-muted-foreground hover:text-primary px-8 pb-2 pt-5"
               onClick={closeMobileMenu}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className="flex flex-col gap-2 px-4 py-3 border-t border-gray-200 dark:border-neutral-700">
-          <a
-            href="/cart"
+          <Link
+            to="/cart"
             className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-700"
             onClick={closeMobileMenu}
           >
             <ShoppingCart className="h-5 w-5" />
             Cart
-          </a>
+          </Link>
           <a
-            href="/user"
+            to="/user"
             className="flex items-center gap-2 px-2 py-2 rounded-md"
             onClick={closeMobileMenu}
           >
