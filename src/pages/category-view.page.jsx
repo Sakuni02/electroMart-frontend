@@ -2,33 +2,31 @@ import { Filter, Grid, SlidersHorizontal } from "lucide-react";
 import { Button } from "../components/ui/button";
 import SimpleProductCard from "../components/SimpleProductCard";
 import { Slider } from "../components/ui/slider";
-import { data, useParams } from "react-router";
-import { useEffect, useState } from "react";
-import { getAllproducts } from "@/lib/product";
+import { useGetAllProductsQuery } from "@/lib/api";
 
 function CategoryView() {
-  const { category } = useParams();
-  const [getProducts, setProducts] = useState([]);
-  const [getError, setError] = useState("");
-  const [getIsLoaing, setIsLoading] = useState(true);
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useGetAllProductsQuery();
 
-  useEffect(() => {
-    getAllproducts(category)
-      .then((data) => setProducts(data))
-      .catch((error) => setError(error.message))
-      .finally(() => setIsLoading(false));
-  }, [category]);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
+  console.log(products);
   return (
     <main>
       <div className="container py-8 lg:px-25 px-5">
         <div className="flex flex-col lg:flex-row items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{category}</h1>
+            <h1 className="text-3xl font-bold mb-2"></h1>
             <p className="text-muted-foreground">3 products found</p>
-            <div>{getIsLoaing ? "Loading" : "Done"}</div>
-            <div>{getError}</div>
-            <div>{JSON.stringify(getProducts)}</div>
+            <div>{isLoading ? "Loading" : "Done"}</div>
+            <div>{error}</div>
+            <div>{JSON.stringify(products)}</div>
           </div>
 
           <div className="flex flex-row gap-2 mt-4">

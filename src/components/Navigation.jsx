@@ -10,10 +10,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { useSelector } from "react-redux";
 
 function Navigation() {
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMobileMenu = () => setIsMenuOpen(false);
+
+  const cartItemCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <header className="sticky top-0 z-20 w-full border-b border-border bg-white/30 backdrop-blur-lg dark:bg-neutral-800/30">
@@ -81,8 +90,11 @@ function Navigation() {
         {/* Desktop Icons */}
         <div className="hidden md:flex items-center gap-2">
           <Link to="/cart">
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="h-4 w-4" />
+            <Button variant="ghost" size="icon" className="relative">
+              <ShoppingCart className="h-6 w-6" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
+                {cartItemCount}
+              </Badge>
             </Button>
           </Link>
 
@@ -109,21 +121,6 @@ function Navigation() {
               </Link>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          {/* <Link to={"/sign-in"}>
-            <Button variant="ghost" size="full">
-              <User className="h-4 w-4" />
-              sign in
-            </Button>
-          </Link> */}
-
-          {/* <Link to={"/sign-up"}>
-            <Button variant="ghost" size="full">
-              <User className="h-4 w-4" />
-              sign up
-            </Button>
-          </Link> */}
-
           <ThemeToggle />
         </div>
 
@@ -201,8 +198,12 @@ function Navigation() {
             className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-700"
             onClick={closeMobileMenu}
           >
-            <ShoppingCart className="h-5 w-5" />
-            Cart
+            <Button variant="ghost" size="icon" className="relative">
+              <ShoppingCart className="h-6 w-6" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
+                8
+              </Badge>
+            </Button>
           </Link>
           <a
             to="/user"
