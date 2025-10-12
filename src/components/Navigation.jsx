@@ -89,7 +89,7 @@ function Navigation() {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex items-center gap-2">
-          <Link to="/cart">
+          <Link to="/shop/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-6 w-6" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">

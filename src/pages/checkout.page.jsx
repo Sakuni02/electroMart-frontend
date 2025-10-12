@@ -1,11 +1,15 @@
-import CartItem from "@/components/Cart.Item";
+import CheckoutItem from "@/components/CheckoutItem";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MoveLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Navigate } from "react-router";
 
-function Cart() {
+function CheckoutPage() {
   const cart = useSelector((state) => state.cart.cartItems);
+
+  if (cart.length === 0) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="container lg:px-25">
@@ -15,29 +19,27 @@ function Cart() {
         </Button>
 
         <div>
-          <h1 className="text-4xl font-bold">Shopping Cart</h1>
+          <h1 className="text-4xl font-bold">Checkout</h1>
           <h1 className="text-lg text-muted-foreground mt-2">
-            2 items in your cart
+            Complete your order
           </h1>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="col-span-2 mb-5">
-          {cart.map((item, index) => (
-            <CartItem key={index} item={item} />
-          ))}
-
-          {/* <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem /> */}
+          <div className="border-2">
+            <p>ssssssssssssss</p>
+          </div>
         </div>
 
         <div className="lg:col-span-1">
           <div className="bg-card rounded-2xl p-6 border border-border sticky mt-5">
             <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+
+            {cart.map((item, index) => (
+              <CheckoutItem key={index} item={item} />
+            ))}
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
               <span>Subtotal</span>
@@ -55,23 +57,6 @@ function Cart() {
               <span>Total</span>
               <span>LKR 650000</span>
             </div>
-
-            {cart.length > 0 ? (
-              <Link to="/shop/checkout">
-                <Button size="lg" className="w-full mt-5 bg-blue-500">
-                  Proceed to Checkout
-                </Button>
-              </Link>
-            ) : (
-              <p>No items in cart</p>
-            )}
-
-            <Button
-              size="lg"
-              className="mt-5 w-full transition-colors duration-300 hover:bg-emerald-500"
-            >
-              Continue Shopping
-            </Button>
           </div>
         </div>
       </div>
@@ -79,4 +64,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default CheckoutPage;

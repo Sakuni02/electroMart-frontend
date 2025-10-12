@@ -1,13 +1,13 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 
-function CartItem() {
+function CartItem({ item }) {
   return (
     <div className="!mt-5 bg-card rounded-2xl !p-6 border border-border group transform transition-all duration-300 hover:shadow-[0_10px_20px_rgba(59,130,246,0.3)] hover:border-blue-500">
       <div className="flex gap-6">
         <div className="flex-shrink-0">
           <img
-            src="assets/images/phone-1.jpg"
+            src={item.product.image}
             className="w-25 h-25 object-cover rounded-lg"
           />
         </div>
@@ -15,17 +15,17 @@ function CartItem() {
         <div className="flex-1">
           <a href={`/product/`}>
             <h3 className="!py-2 font-semibold hover:text-primary transition-colors">
-              iphone Pro max
+              {item.product.name}
             </h3>
           </a>
 
           <p className="text-sm text-muted-foreground">Color: Space Black</p>
 
           <div className="flex items-center gap-2 !py-2">
-            <span className="font-bold">LKR 600,000</span>
+            <span className="font-bold"> {item.product.price}</span>
 
-            <span className="text-sm text-muted-foreground line-through">
-              LKR 600,000
+            <span className="text-sm text-muted-foreground">
+              Quantity: {item.quantity}
             </span>
           </div>
         </div>

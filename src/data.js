@@ -5,12 +5,24 @@ const products = [
         colorId: "67deec8e2b2c146578729f2f",
         image:
             "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/f93fec70-da18-44f9-a18d-27a5edd24037/M+NK+DF+FORM+7IN+UL+SHORT.png",
-        name: "Nike Dri-FIT Training Shorts",
-        price: 40,
+        name: "Honor X8C (8GB / 512GB) (White)",
+        price: 90000,
         stripePriceId: "price_1R5W5XJjbWEvglIU42i6PuXC",
         description:
-            "Lightweight and breathable training shorts designed for high-performance workouts.",
+            "512GB, 8GB RAM 1080 x 2412 pixels, 6.7 inches Android 15/Magic OS 9108 MP + 5MP + 50MP Selfie",
         featured: true,
+        specifications: {
+            Type: "Smartphone",
+            Sensors:
+                "Fingerprint (under display, optical), accelerometer, gyro, compass, proximity (ultrasonic)",
+            Colors: "Moonlight White",
+            Network: {
+                "2G Network": "GSM 850 / 900 / 1800 / 1900",
+                "3G Network": "HSDPA 850 / 900 / 1900 / 2100",
+                "4G Network": "LTE",
+                "Data Speed": "HSPA, LTE",
+            },
+        },
         __v: 0,
     },
     {

@@ -45,7 +45,7 @@ function SimpleProductCard(props) {
       </div>
 
       <div className="flex flex-col items-start !m-3 gap-3">
-        <h3 className="mt-4 text-lg font-semibold">{props.product.price}</h3>
+        <h3 className="mt-4 text-lg font-semibold">6666666666</h3>
         <div className="flex gap-1">
           <div className="w-4 h-4 rounded-full border border-border bg-pink-700" />
           <div className="w-4 h-4 rounded-full border border-border bg-orange-700" />
@@ -68,7 +68,7 @@ function SimpleProductCard(props) {
           </div>
         </div>
 
-        <p className="mt-2 text-primary font-bold">${props.product.price}</p>
+        <p className="mt-2 text-primary font-bold">$456</p>
       </div>
     </div>
   );
