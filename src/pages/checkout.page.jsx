@@ -1,4 +1,5 @@
 import CheckoutItem from "@/components/CheckoutItem";
+import ShippingAddressForm from "@/components/ShippingAddressForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useSelector } from "react-redux";
@@ -13,7 +14,7 @@ function CheckoutPage() {
 
   return (
     <div className="container lg:px-25">
-      <div className="flex gap-2 justify-start items-center mt-4">
+      <div className="flex gap-2 justify-start items-center mt-12">
         <Button variant="ghost" size="icon">
           <ArrowLeft className="h-5 w-5" />
         </Button>
@@ -26,15 +27,15 @@ function CheckoutPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8  mt-8">
         <div className="col-span-2 mb-5">
-          <div className="border-2">
-            <p>ssssssssssssss</p>
+          <div className="border-2 rounded-2xl">
+            <ShippingAddressForm />
           </div>
         </div>
 
         <div className="lg:col-span-1">
-          <div className="bg-card rounded-2xl p-6 border border-border sticky mt-5">
+          <div className="bg-card rounded-2xl p-6 border border-border sticky">
             <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
 
             {cart.map((item, index) => (
