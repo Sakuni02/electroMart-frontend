@@ -8,10 +8,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useCreateOrderMutation } from "@/lib/api";
 
 const shippingAddresFormSchema = z.object({
   line_1: z.string().min(1).max(50),
@@ -31,8 +33,22 @@ function ShippingAddressForm() {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  const cart = useSelector((state) => state.cart.cartItems);
+  const [createOrder, { isLoadng }] = useCreateOrderMutation();
+  console.log(cart);
+
+  async function onSubmit(values) {
+    try {
+      await createOrder({
+        shippingAddress: values,
+        orderItems: cart.map((item) => ({
+          productId: item.product._id,
+          quantity: item.quantity,
+        })),
+      }).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

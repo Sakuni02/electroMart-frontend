@@ -12,24 +12,36 @@ import CategoryView from "./pages/category-view.page";
 import RootLayout from "./layouts/root.layout";
 import Cart from "./pages/cart.page";
 import CheckoutPage from "./pages/checkout.page";
+import { ClerkProvider } from "@clerk/clerk-react";
+import ProtectedLayout from "./layouts/protected.layout";
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Add your Clerk Publishable Key to the .env file");
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<RootLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop">
-              <Route path=":category" element={<CategoryView />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<CheckoutPage />} />
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<RootLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop">
+                <Route path=":category" element={<CategoryView />} />
+                <Route path="cart" element={<Cart />} />
+                <Route element={<ProtectedLayout />}>
+                  <Route path="checkout" element={<CheckoutPage />} />
+                </Route>
+              </Route>
+              <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/sign-in" element={<SignInPage />} />
             </Route>
-            <Route path="/sign-up" element={<SignUpPage />} />
-            <Route path="/sign-in" element={<SignInPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </ClerkProvider>
   </StrictMode>
 );

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { useSelector } from "react-redux";
+import { SignedIn, UserButton, SignedOut } from "@clerk/clerk-react";
 
 function Navigation() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -97,30 +98,39 @@ function Navigation() {
               </Badge>
             </Button>
           </Link>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex items-center px-3 py-2 rounded-md border"
-              >
-                <User className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
+          <div className="hidden md:block">
+            <SignedOut>
+              {" "}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center px-3 py-2 rounded-md border"
+                  >
+                    <User className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
 
-            <DropdownMenuContent>
-              <Link to={"/sign-up"}>
-                <DropdownMenuItem className="px-3 py-2">
-                  Sign Up
-                </DropdownMenuItem>
-              </Link>
-              <Link to={"/sign-in"}>
-                <DropdownMenuItem className="px-3 py-2">
-                  Sign In
-                </DropdownMenuItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuContent>
+                  <Link to={"/sign-up"}>
+                    <DropdownMenuItem className="px-3 py-2">
+                      Sign Up
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={"/sign-in"}>
+                    <DropdownMenuItem className="px-3 py-2">
+                      Sign In
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SignedOut>
+          </div>
+
           <ThemeToggle />
         </div>
 
