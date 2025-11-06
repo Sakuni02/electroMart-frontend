@@ -76,6 +76,12 @@ function Navigation() {
           })}
         </nav>
 
+        <div>
+          <Link to="/admin/products/create">
+            <h2 className="text-white">Admin Panel</h2>
+          </Link>
+        </div>
+
         {/* Search Bar */}
         <div className="hidden md:flex flex-1 max-w-md mx-8">
           <div className="relative w-full search-glow rounded-lg">

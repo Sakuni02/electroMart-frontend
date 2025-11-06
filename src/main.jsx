@@ -14,6 +14,8 @@ import Cart from "./pages/cart.page";
 import CheckoutPage from "./pages/checkout.page";
 import { ClerkProvider } from "@clerk/clerk-react";
 import ProtectedLayout from "./layouts/protected.layout";
+import CreateProductPage from "./pages/create-product-page";
+import AdminProtectedLayout from "./layouts/admin-protected.layout";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -36,6 +38,16 @@ createRoot(document.getElementById("root")).render(
                   <Route path="checkout" element={<CheckoutPage />} />
                 </Route>
               </Route>
+
+              <Route element={<ProtectedLayout />}>
+                <Route element={<AdminProtectedLayout />}>
+                  <Route
+                    path="/admin/products/create"
+                    element={<CreateProductPage />}
+                  />
+                </Route>
+              </Route>
+
               <Route path="/sign-up" element={<SignUpPage />} />
               <Route path="/sign-in" element={<SignInPage />} />
             </Route>

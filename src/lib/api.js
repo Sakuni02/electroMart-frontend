@@ -1,3 +1,5 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 export const Api = createApi({
     reducerPath: "Api",
     baseQuery: fetchBaseQuery({
@@ -22,6 +24,16 @@ export const Api = createApi({
         getAllProducts: build.query({
             query: () => `/products`,
         }),
+        getAllCategories: build.query({
+            query: () => `/categories`,
+        }),
+        createProduct: build.mutation({
+            query: (product) => ({
+                url: "/products",
+                method: "POST",
+                body: product,
+            }),
+        }),
         createOrder: build.mutation({
             query: (order) => ({
                 url: "/orders",
@@ -32,6 +44,4 @@ export const Api = createApi({
     }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetAllProductsQuery, useCreateOrderMutation } = Api;
+export const { useGetAllProductsQuery, useCreateOrderMutation, useCreateProductMutation, useGetAllCategoriesQuery } = Api;
