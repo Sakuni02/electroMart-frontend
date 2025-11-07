@@ -4,15 +4,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SimpleProductCard from "../components/SimpleProductCard";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useGetProductsByIdQuery } from "@/lib/api";
+import { useParams } from "react-router";
 
 function SingleProductView() {
-  const images = [
-    "assets/images/audio.jpg",
-    "assets/images/audio1.jpg",
-    "assets/images/audio2.jpg",
-  ];
+  const { id } = useParams();
+  const { data: product, isLoading, isError } = useGetProductsByIdQuery(id);
 
-  const [getSelectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError || !product) return <p>Product not found</p>;
+
+  const images = product.images?.length ? product.images : [product.image];
 
   return (
     <div className="container">
@@ -27,7 +31,7 @@ function SingleProductView() {
                   alt={`Thumbnail ${idx + 1}`}
                   className={`h-24 w-24 object-cover rounded-2xl cursor-pointer border-2 
                   ${
-                    getSelectedImage === img
+                    selectedImage === img
                       ? "border-blue-500"
                       : "border-transparent"
                   }`}
@@ -36,57 +40,33 @@ function SingleProductView() {
                   transition={{ duration: 0.3 }}
                 />
               ))}
-
-              {/* <img
-                src="assets/images/phone-1.jpg"
-                alt="Product Name"
-                className="h-25 w-25 object-cover rounded-2xl"
-              />
-
-              <img
-                src="assets/images/phone-1.jpg"
-                alt="Product Name"
-                className="h-25 w-25 object-cover rounded-2xl"
-              />
-              <img
-                src="assets/images/phone-1.jpg"
-                alt="Product Name"
-                className="h-25 w-25 object-cover rounded-2xl"
-              /> */}
             </div>
             <motion.div
-              key={getSelectedImage}
+              key={selectedImage}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
               className="col-span-1"
             >
               <img
-                src={getSelectedImage}
-                alt="Selected Product"
+                src={selectedImage || images[0]}
+                alt={product.name}
                 className="h-full w-full object-cover rounded-2xl shadow-lg"
               />
             </motion.div>
           </div>
         </div>
         <div className="col-span-1 px-8 lg:px-10 gap-4 flex flex-col">
-          <h1 className="text-3xl font-bold">iPhone 15 Pro Max 256GB</h1>
+          <h1 className="text-3xl font-bold">{product.name}</h1>
           <div className="flex gap-2">
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             <span className="text-sm text-muted-foreground">(4.8)</span>
           </div>
-          <span className="text-3xl font-bold">$1199</span>
+          <span className="text-3xl font-bold">LKR {product.price}</span>
           <div>
             <span className="font-medium">Available Colors:</span>
             <div className="flex gap-1 mt-3">
               <div className="w-8 h-8 rounded-full border border-border bg-pink-700" />
-              <div className="w-8 h-8 rounded-full border border-border bg-orange-700" />
-              <div className="w-8 h-8 rounded-full border border-border bg-blue-700" />
-              <div className="w-8 h-8 rounded-full border border-border bg-green-700" />
             </div>
           </div>
 
@@ -116,13 +96,6 @@ function SingleProductView() {
               Add to wishlist
             </Button>
           </div>
-
-          <p className="text-lg text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip
-          </p>
         </div>
       </div>
 
@@ -134,31 +107,32 @@ function SingleProductView() {
             <TabsTrigger value="reviews">Reviews</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="p-8">
-            <p className="text-muted-foreground">
-              Experience cutting-edge technology with this premium device.
-              Featuring advanced capabilities and sleek design, this product
-              delivers exceptional performance for all your daily needs.
+            <p className="text-lg text-muted-foreground">
+              {product.description}
             </p>
           </TabsContent>
           <TabsContent value="specifications">
             <div className="grid lg:grid-cols-2">
               <div>
-                <h4 className="font-semibold mb-3 mt-3">Technical Specs</h4>
                 <div className="text-sm">
-                  <div className="flex justify-between mb-3 mt-3">
-                    <span className="text-muted-foreground">Category:</span>
-                    <span className="capitalize">Phone</span>
-                  </div>
-                  <div className="flex justify-between mb-3 mt-3">
-                    <span className="text-muted-foreground">Rating:</span>
-                    <span>/5</span>
-                  </div>
-                  <div className="flex justify-between mb-3 mt-3">
-                    <span className="text-muted-foreground">
-                      Colors Available:
-                    </span>
-                    <span>red</span>
-                  </div>
+                  {Array.isArray(product.specifications) ? (
+                    product.specifications.map((spec) => (
+                      <div
+                        key={spec._id || spec.key}
+                        className="flex justify-between mb-3 mt-3 capitalize"
+                      >
+                        {" "}
+                        <span className="text-muted-foreground">
+                          {spec.key}:
+                        </span>
+                        <span>{spec.value}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-muted-foreground">not found</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -172,12 +146,12 @@ function SingleProductView() {
         </Tabs>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:px-20 px-5 mt-8 mb-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:px-20 px-5 mt-8 mb-8">
         <SimpleProductCard />
         <SimpleProductCard />
         <SimpleProductCard />
         <SimpleProductCard />
-      </div>
+      </div> */}
     </div>
   );
 }

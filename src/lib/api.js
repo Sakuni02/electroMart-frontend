@@ -27,6 +27,19 @@ export const Api = createApi({
         getAllCategories: build.query({
             query: () => `/categories`,
         }),
+
+        getAllBrands: build.query({
+            query: () => `/brands`,
+        }),
+
+        getAllColors: build.query({
+            query: () => `/colors`,
+        }),
+
+        getProductsById: build.query({
+            query: (id) => `/products/${id}`,
+        }),
+
         createProduct: build.mutation({
             query: (product) => ({
                 url: "/products",
@@ -34,6 +47,15 @@ export const Api = createApi({
                 body: product,
             }),
         }),
+
+        createBrand: build.mutation({
+            query: (brand) => ({
+                url: "/brands",
+                method: "POST",
+                body: brand,
+            }),
+        }),
+
         createOrder: build.mutation({
             query: (order) => ({
                 url: "/orders",
@@ -44,4 +66,4 @@ export const Api = createApi({
     }),
 });
 
-export const { useGetAllProductsQuery, useCreateOrderMutation, useCreateProductMutation, useGetAllCategoriesQuery } = Api;
+export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation } = Api;

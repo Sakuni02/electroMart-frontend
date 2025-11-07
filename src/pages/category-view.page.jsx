@@ -16,7 +16,6 @@ function CategoryView() {
     return <p>Loading...</p>;
   }
 
-  console.log(products);
   return (
     <main>
       <div className="container py-8 lg:px-25 px-5">
@@ -26,7 +25,6 @@ function CategoryView() {
             <p className="text-muted-foreground">3 products found</p>
             <div>{isLoading ? "Loading" : "Done"}</div>
             <div>{error}</div>
-            <div>{JSON.stringify(products)}</div>
           </div>
 
           <div className="flex flex-row gap-2 mt-4">
@@ -95,16 +93,9 @@ function CategoryView() {
             </div>
           </aside>
 
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
-          <SimpleProductCard />
+          {products.map((product) => (
+            <SimpleProductCard key={product._id} product={product} />
+          ))}
         </div>
       </div>
     </main>

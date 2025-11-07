@@ -16,6 +16,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import ProtectedLayout from "./layouts/protected.layout";
 import CreateProductPage from "./pages/create-product-page";
 import AdminProtectedLayout from "./layouts/admin-protected.layout";
+import SingleProductView from "./pages/sigle-product-view.page";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -31,6 +32,7 @@ createRoot(document.getElementById("root")).render(
           <Routes>
             <Route element={<RootLayout />}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/products/:id" element={<SingleProductView />} />
               <Route path="/shop">
                 <Route path=":category" element={<CategoryView />} />
                 <Route path="cart" element={<Cart />} />
