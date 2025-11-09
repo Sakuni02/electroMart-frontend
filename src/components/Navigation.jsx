@@ -40,28 +40,28 @@ function Navigation() {
         <nav className="hidden md:flex items-center gap-6">
           {[
             {
+              path: "/shop/audio",
+              label: "Audio",
+            },
+
+            {
               path: "/shop/smartphones",
               label: "Smartphones",
             },
 
             {
               path: "/shop/accssessories",
-              label: "Accessories",
+              label: "Accssessories",
             },
 
             {
-              path: "/shop/audio",
-              label: "Audio",
+              path: "/shop/laptops",
+              label: "Laptops",
             },
 
             {
-              path: "/shop/cases",
-              label: "Cases",
-            },
-
-            {
-              path: "/shop/charges",
-              label: "Charges",
+              path: "/shop/printers",
+              label: "Printers",
             },
           ].map((item) => {
             return (
@@ -173,28 +173,28 @@ function Navigation() {
         <div className="pb-4 pt-4">
           {[
             {
+              path: "/shop/audio",
+              label: "Audio",
+            },
+
+            {
               path: "/shop/smartphones",
               label: "Smartphones",
             },
 
             {
               path: "/shop/accssessories",
-              label: "Accessories",
+              label: "Accssessories",
             },
 
             {
-              path: "/shop/audio",
-              label: "Audio",
+              path: "/shop/laptops",
+              label: "Laptops",
             },
 
             {
-              path: "/shop/cases",
-              label: "Cases",
-            },
-
-            {
-              path: "/shop/charges",
-              label: "Charges",
+              path: "/shop/printers",
+              label: "Printers",
             },
           ].map((item) => (
             <Link

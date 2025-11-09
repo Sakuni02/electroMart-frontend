@@ -2,18 +2,25 @@ import { Filter, Grid, SlidersHorizontal } from "lucide-react";
 import { Button } from "../components/ui/button";
 import SimpleProductCard from "../components/SimpleProductCard";
 import { Slider } from "../components/ui/slider";
-import { useGetAllProductsQuery } from "@/lib/api";
+import { useGetProductsByCategoryQuery } from "@/lib/api";
+import { useParams } from "react-router";
 
 function CategoryView() {
+  const { slug } = useParams();
+
   const {
-    data: products,
+    data: products = [],
     isLoading,
     isError,
     error,
-  } = useGetAllProductsQuery();
+  } = useGetProductsByCategoryQuery(slug);
 
   if (isLoading) {
     return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error: {error?.data?.message || "Something went wrong"}</p>;
   }
 
   return (
@@ -21,8 +28,10 @@ function CategoryView() {
       <div className="container py-8 lg:px-25 px-5">
         <div className="flex flex-col lg:flex-row items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2"></h1>
-            <p className="text-muted-foreground">3 products found</p>
+            <h1 className="text-3xl font-bold mb-2 capitalize">{slug}</h1>
+            <p className="text-muted-foreground">
+              {products.length} products found
+            </p>
             <div>{isLoading ? "Loading" : "Done"}</div>
             <div>{error}</div>
           </div>
@@ -93,9 +102,13 @@ function CategoryView() {
             </div>
           </aside>
 
-          {products.map((product) => (
-            <SimpleProductCard key={product._id} product={product} />
-          ))}
+          {products.length > 0 ? (
+            products.map((product) => (
+              <SimpleProductCard key={product._id} product={product} />
+            ))
+          ) : (
+            <p>No products found in this category.</p>
+          )}
         </div>
       </div>
     </main>

@@ -40,6 +40,10 @@ export const Api = createApi({
             query: (id) => `/products/${id}`,
         }),
 
+        getProductsByCategory: build.query({
+            query: (slug) => `/products/shop/${slug}`,
+        }),
+
         createProduct: build.mutation({
             query: (product) => ({
                 url: "/products",
@@ -66,4 +70,4 @@ export const Api = createApi({
     }),
 });
 
-export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation } = Api;
+export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useGetProductsByCategoryQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation } = Api;
