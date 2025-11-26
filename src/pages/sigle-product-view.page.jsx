@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useGetProductsByIdQuery } from "@/lib/api";
 import { useParams } from "react-router";
+import AddReviewDialog from "@/components/AddReviewDialog";
 
 function SingleProductView() {
   const { id } = useParams();
@@ -17,6 +18,14 @@ function SingleProductView() {
   if (isError || !product) return <p>Product not found</p>;
 
   const images = product.images?.length ? product.images : [product.image];
+
+  const averageRating =
+    product.reviews && product.reviews.length > 0
+      ? (
+          product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+          product.reviews.length
+        ).toFixed(1)
+      : null;
 
   return (
     <div className="container">
@@ -58,15 +67,24 @@ function SingleProductView() {
         </div>
         <div className="col-span-1 px-8 lg:px-10 gap-4 flex flex-col">
           <h1 className="text-3xl font-bold">{product.name}</h1>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            <span className="text-sm text-muted-foreground">(4.8)</span>
+            <span className="text-sm text-muted-foreground">
+              {averageRating ? `(${averageRating})` : "(No reviews yet)"}
+            </span>
           </div>
           <span className="text-3xl font-bold">LKR {product.price}</span>
           <div>
             <span className="font-medium">Available Colors:</span>
-            <div className="flex gap-1 mt-3">
-              <div className="w-8 h-8 rounded-full border border-border bg-pink-700" />
+            <div className="mt-3 flex items-center gap-3">
+              <div
+                className="w-8 h-8 rounded-full border border-white"
+                style={{ backgroundColor: product.colorId?.hex }}
+              />
+
+              <span className="text-lg font-medium capitalize">
+                {product.colorId?.name}
+              </span>
             </div>
           </div>
 
@@ -137,10 +155,45 @@ function SingleProductView() {
               </div>
             </div>
           </TabsContent>
-
           <TabsContent value="reviews" className="mt-6">
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">Reviews coming soon...</p>
+            <div className="text-center py-8 px-4 flex flex-col items-start gap-4">
+              <AddReviewDialog productId={product._id} />
+            </div>
+
+            <div className="px-4 mb-5">
+              {product.reviews?.length > 0 ? (
+                <div className="space-y-6">
+                  {product.reviews.map((review) => (
+                    <div
+                      key={review._id}
+                      className="p-4 border rounded-xl shadow-sm"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold">{review.name}</h3>
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star
+                              key={s}
+                              className={`w-4 h-4 ${
+                                s <= review.rating
+                                  ? "text-yellow-500 fill-yellow-500"
+                                  : "text-gray-300"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground mt-2">
+                        {review.review}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-center mb-4">
+                  No reviews yet. Be the first one!
+                </p>
+              )}
             </div>
           </TabsContent>
         </Tabs>

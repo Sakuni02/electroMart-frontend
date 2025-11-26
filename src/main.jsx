@@ -17,6 +17,7 @@ import ProtectedLayout from "./layouts/protected.layout";
 import CreateProductPage from "./pages/create-product-page";
 import AdminProtectedLayout from "./layouts/admin-protected.layout";
 import SingleProductView from "./pages/sigle-product-view.page";
+import AdminDashboard from "./pages/admin/dashboard";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -43,6 +44,7 @@ createRoot(document.getElementById("root")).render(
 
               <Route element={<ProtectedLayout />}>
                 <Route element={<AdminProtectedLayout />}>
+                  <Route path="/admin" element={<AdminDashboard />} />
                   <Route
                     path="/admin/products/create"
                     element={<CreateProductPage />}

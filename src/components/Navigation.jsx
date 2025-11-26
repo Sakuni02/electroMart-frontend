@@ -77,7 +77,7 @@ function Navigation() {
         </nav>
 
         <div>
-          <Link to="/admin/products/create">
+          <Link to="/admin">
             <h2 className="text-white">Admin Panel</h2>
           </Link>
         </div>

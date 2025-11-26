@@ -27,12 +27,6 @@ function Cart() {
           {cart.map((item, index) => (
             <CartItem key={index} item={item} />
           ))}
-
-          {/* <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem /> */}
         </div>
 
         <div className="lg:col-span-1">

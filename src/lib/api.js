@@ -38,6 +38,7 @@ export const Api = createApi({
 
         getProductsById: build.query({
             query: (id) => `/products/${id}`,
+            providesTags: (result, error, id) => [{ type: "Product", id }],
         }),
 
         getProductsByCategory: build.query({
@@ -67,7 +68,17 @@ export const Api = createApi({
                 body: order,
             }),
         }),
+        createReview: build.mutation({
+            query: (review) => ({
+                url: "/review",
+                method: "POST",
+                body: review,
+            }),
+            invalidatesTags: (result, error, { productId }) => [
+                { type: "Product", id: productId }
+            ],
+        }),
     }),
 });
 
-export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useGetProductsByCategoryQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation } = Api;
+export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useGetProductsByCategoryQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation, useCreateReviewMutation } = Api;

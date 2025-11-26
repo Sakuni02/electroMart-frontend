@@ -29,16 +29,18 @@ function SimpleProductCard({ product }) {
             <Button
               variant="variant"
               className="w-full bg-blue-600"
-              onClick={() =>
+              onClick={(e) => {
+                e.preventDefault(); // stops the <Link> navigation
+                e.stopPropagation(); // prevents click from reaching parent
                 dispatch(
                   addToCart({
                     _id: product._id,
                     name: product.name,
                     price: product.price,
-                    image: product.image,
+                    image: product.images[0],
                   })
-                )
-              }
+                );
+              }}
             >
               <ShoppingCart className="mr-2 h-4 w-4" />
               Add to Cart

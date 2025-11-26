@@ -11,7 +11,7 @@ function CreateProductPage() {
   const { data: colors } = useGetAllColorsQuery();
 
   return (
-    <div className="p-10">
+    <div className="p-15">
       <CreateProductForm
         categories={categories}
         brands={brands}

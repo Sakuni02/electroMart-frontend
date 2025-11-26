@@ -9,6 +9,7 @@ function CartItem({ item }) {
           <img
             src={item.product.image}
             className="w-25 h-25 object-cover rounded-lg"
+            alt={item.product.name}
           />
         </div>
 
