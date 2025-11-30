@@ -1,4 +1,4 @@
-import CreateProductForm from "@/components/CreateProductForm";
+import CreateProductForm from "../../components/CreateProductForm";
 import {
   useGetAllBrandsQuery,
   useGetAllCategoriesQuery,
