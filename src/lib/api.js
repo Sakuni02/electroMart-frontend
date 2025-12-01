@@ -78,7 +78,21 @@ export const Api = createApi({
                 { type: "Product", id: productId }
             ],
         }),
+        getCheckoutSessionStatus: build.query({
+            query: (sessionId) => `/payments/session-status?session_id=${sessionId}`,
+        }),
     }),
 });
 
-export const { useGetAllProductsQuery, useGetAllBrandsQuery, useGetAllColorsQuery, useGetAllCategoriesQuery, useGetProductsByIdQuery, useGetProductsByCategoryQuery, useCreateOrderMutation, useCreateProductMutation, useCreateBrandMutation, useCreateReviewMutation } = Api;
+export const {
+    useGetAllProductsQuery,
+    useGetAllBrandsQuery,
+    useGetAllColorsQuery,
+    useGetAllCategoriesQuery,
+    useGetProductsByIdQuery,
+    useGetProductsByCategoryQuery,
+    useCreateOrderMutation,
+    useCreateProductMutation,
+    useCreateBrandMutation,
+    useCreateReviewMutation,
+    useGetCheckoutSessionStatusQuery } = Api;

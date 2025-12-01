@@ -18,7 +18,7 @@ import { useNavigate } from "react-router";
 
 const shippingAddresFormSchema = z.object({
   line_1: z.string().min(1).max(50),
-  line_2: z.string(1).max(50).optional(),
+  line_2: z.string().min(1).max(50).optional(),
   city: z.string().min(1).max(50),
   phone: z.string().min(1).max(15),
 });
@@ -36,8 +36,7 @@ function ShippingAddressForm() {
 
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cartItems);
-  const [createOrder, { isLoadng }] = useCreateOrderMutation();
-  console.log(cart);
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
 
   async function onSubmit(values) {
     try {
@@ -48,7 +47,7 @@ function ShippingAddressForm() {
           quantity: item.quantity,
         })),
       }).unwrap();
-      navigate(`shop/payment?orderId=${order._id}`);
+      navigate(`/shop/payment?orderId=${order._id}`);
     } catch (error) {
       console.log(error);
     }
