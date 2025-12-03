@@ -1,26 +1,33 @@
 import { Filter, Grid, SlidersHorizontal } from "lucide-react";
 import { Button } from "../components/ui/button";
 import SimpleProductCard from "../components/SimpleProductCard";
-import { Slider } from "../components/ui/slider";
-import { useGetProductsByCategoryQuery } from "@/lib/api";
+import * as Slider from "@radix-ui/react-slider";
+import {
+  useGetAllColorsQuery,
+  useGetFilteredProductsByCategoryQuery,
+} from "@/lib/api";
 import { useParams } from "react-router";
+import { useState } from "react";
 
 function CategoryView() {
   const { slug } = useParams();
 
+  const [selectedColor, setSelectedColor] = useState(null);
+  const { data: colors } = useGetAllColorsQuery();
+  const [maxPrice, setMaxPrice] = useState(null);
+
   const {
-    data: products = [],
+    data: products,
     isLoading,
     isError,
-    error,
-  } = useGetProductsByCategoryQuery(slug);
+  } = useGetFilteredProductsByCategoryQuery({
+    slug,
+    colorId: selectedColor,
+    maxPrice: maxPrice ?? undefined, // only send if set
+  });
 
   if (isLoading) {
     return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>Error: {error?.data?.message || "Something went wrong"}</p>;
   }
 
   return (
@@ -33,7 +40,7 @@ function CategoryView() {
               {products.length} products found
             </p>
             <div>{isLoading ? "Loading" : "Done"}</div>
-            <div>{error}</div>
+            <div>{isError}</div>
           </div>
 
           <div className="flex flex-row gap-2 mt-4">
@@ -74,29 +81,46 @@ function CategoryView() {
               <h2 className="font-semibold">Filters</h2>
             </div>
             <div>
-              <Slider max={2000} min={0} step={50} className="w-full" />
+              <Slider.Root
+                value={[maxPrice ?? 200000]} // wrap number in array
+                onValueChange={(value) => setMaxPrice(value[0])} // Radix always sends array
+                min={0}
+                max={200000}
+                step={50}
+                className="relative flex items-center select-none touch-none w-full h-5"
+              >
+                <Slider.Track className="bg-gray-200 relative grow rounded-full h-1">
+                  <Slider.Range className="absolute bg-blue-500 rounded-full h-full" />
+                </Slider.Track>
+                <Slider.Thumb className="block w-5 h-5 bg-white border border-gray-400 rounded-full" />
+              </Slider.Root>
+
+              <p className="mt-2">
+                Max Price: {maxPrice !== null ? maxPrice : "No Limit"}
+              </p>
             </div>
 
             <div className="mt-6">
               <h3 className="font-semibold mb-2">Color</h3>
-
               <div className="grid grid-cols-6 gap-2">
-                <button className="w-8 h-8 rounded-full border transition bg-amber-400" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-800" />
-                <button className="w-8 h-8 rounded-full border transition bg-blue-500" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-400" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-800" />
-                <button className="w-8 h-8 rounded-full border transition bg-blue-500" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-800" />
-                <button className="w-8 h-8 rounded-full border transition bg-blue-500" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-400" />
-                <button className="w-8 h-8 rounded-full border transition bg-amber-800" />
-                <button className="w-8 h-8 rounded-full border transition bg-blue-500" />
+                {colors?.map((c) => (
+                  <button
+                    key={c._id}
+                    onClick={() => setSelectedColor(c._id)}
+                    className={`w-8 h-8 rounded-full border transition 
+        ${selectedColor === c._id ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
+                    style={{ backgroundColor: c.hex }}
+                    aria-label={c.name}
+                  />
+                )) ?? <p>Loading colors...</p>}
               </div>
             </div>
 
             <div className="mt-6">
-              <Button className="w-full transition-colors duration-300 hover:bg-emerald-500">
+              <Button
+                className="w-full transition-colors duration-300 hover:bg-emerald-500"
+                onClick={() => setSelectedColor(null)}
+              >
                 Clear Filter
               </Button>
             </div>

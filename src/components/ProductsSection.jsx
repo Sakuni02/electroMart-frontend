@@ -29,7 +29,7 @@ function ProductSesction() {
         ))}
       </div>
 
-      <div className="flex gap-2 justify-center items-center mt-5">
+      <div className="flex gap-2 justify-center items-center mt-5 mb-8">
         <Button variant="outline" size="lg" className="bg-blue-500 px-5">
           View All Products
           <ArrowRight className="ml-2 h-5 w-5" />

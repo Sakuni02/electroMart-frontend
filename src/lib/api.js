@@ -41,8 +41,20 @@ export const Api = createApi({
             providesTags: (result, error, id) => [{ type: "Product", id }],
         }),
 
-        getProductsByCategory: build.query({
-            query: (slug) => `/products/shop/${slug}`,
+        // getProductsByCategory: build.query({
+        //     query: (slug) => `/products/shop/${slug}`,
+        // }),
+
+        getFilteredProductsByCategory: build.query({
+            query: ({ slug, colorId, minPrice, maxPrice }) => {
+                const params = new URLSearchParams();
+
+                if (colorId) params.append("colorId", colorId);
+                if (minPrice) params.append("minPrice", minPrice);
+                if (maxPrice) params.append("maxPrice", maxPrice);
+
+                return `/products/shop/${slug}?${params.toString()}`;
+            },
         }),
 
         createProduct: build.mutation({
@@ -90,7 +102,8 @@ export const {
     useGetAllColorsQuery,
     useGetAllCategoriesQuery,
     useGetProductsByIdQuery,
-    useGetProductsByCategoryQuery,
+    useGetFilteredProductsByCategoryQuery,
+    // useGetProductsByCategoryQuery,
     useCreateOrderMutation,
     useCreateProductMutation,
     useCreateBrandMutation,

@@ -1,16 +1,25 @@
-# React + Vite
+# ⚡ ElectroMart Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Purpose
 
-Currently, two official plugins are available:
+This is the **frontend** of the ElectroMart e-commerce platform.  
+It handles the **user interface**, **cart management**, **checkout process**, and displays **order confirmation details** after successful payment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 🛍️ **Product listing and detail pages**
+- 🛒 **Shopping cart and checkout flow**
+- 💳 **Stripe Checkout integration for payments**
+- ✅ **Order confirmation page** with purchased items and shipping details
+- 🎨 **Animated UI components** using Framer Motion
+- 🔐 **Integration with Clerk** for authentication (optional)
+- 📱 **Design** using TailwindCSS
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend Framework:** React ⚛️
+- **State Management:** Redux 🗂️
+- **UI:** TailwindCSS 🌬️, Framer Motion ✨, Lucide Icons 🖋️
+- **Routing:** React Router 🧭
+- **Payment:** Stripe Checkout 💳
+- **Authentication (optional):** Clerk 🔐

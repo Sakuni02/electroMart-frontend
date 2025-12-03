@@ -6,6 +6,11 @@ import { Link } from "react-router";
 
 function SimpleProductCard({ product }) {
   const dispatch = useDispatch();
+  const avgRating =
+    product.reviews && product.reviews.length > 0
+      ? product.reviews.reduce((sum, r) => sum + r.rating, 0) /
+        product.reviews.length
+      : 0;
 
   return (
     <Link to={`/products/${product._id}`} className="no-underline text-inherit">
@@ -51,24 +56,21 @@ function SimpleProductCard({ product }) {
         <div className="flex flex-col items-start !m-3 gap-3">
           <h3 className="mt-4 text-lg font-semibold">{product.name}</h3>
           <div className="flex gap-1">
-            <div className="w-4 h-4 rounded-full border border-border bg-pink-700" />
-            <div className="w-4 h-4 rounded-full border border-border bg-orange-700" />
-            <div className="w-4 h-4 rounded-full border border-border bg-blue-700" />
-            <div className="w-4 h-4 rounded-full border border-border bg-green-700" />
-            <span className="text-xs text-muted-foreground ml-1">+2</span>
-          </div>
-
-          <div className="flex gap-1">
             <div className="flex items-center gap-1">
-              {/* Filled stars */}
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-              {/* Empty star */}
-              <Star className="w-4 h-4 text-gray-400" />
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-4 h-4 ${
+                    i < Math.round(avgRating)
+                      ? "text-yellow-500 fill-yellow-500"
+                      : "text-gray-400"
+                  }`}
+                />
+              ))}
 
-              <span className="text-xs text-muted-foreground ml-1">(4.8)</span>
+              <span className="text-xs text-muted-foreground ml-1">
+                ({avgRating.toFixed(1)})
+              </span>
             </div>
           </div>
 
