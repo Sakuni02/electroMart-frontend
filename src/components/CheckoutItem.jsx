@@ -3,7 +3,7 @@ function CheckoutItem({ item }) {
     <div className="flex gap-2 mt-2">
       <div className="flex-shrink-0">
         <img
-          src={item.product.image}
+          src={item.product.images[0]}
           className="w-18 h-18 object-cover rounded-lg"
         />
       </div>

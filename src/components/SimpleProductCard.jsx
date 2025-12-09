@@ -1,7 +1,7 @@
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/lib/features/cartSlice";
+import { addItemToDB } from "@/lib/features/cartSlice";
 import { Link } from "react-router";
 
 function SimpleProductCard({ product }) {
@@ -37,14 +37,7 @@ function SimpleProductCard({ product }) {
               onClick={(e) => {
                 e.preventDefault(); // stops the <Link> navigation
                 e.stopPropagation(); // prevents click from reaching parent
-                dispatch(
-                  addToCart({
-                    _id: product._id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.images[0],
-                  })
-                );
+                dispatch(addItemToDB(product._id));
               }}
             >
               <ShoppingCart className="mr-2 h-4 w-4" />

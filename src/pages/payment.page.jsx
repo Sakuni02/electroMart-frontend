@@ -15,13 +15,6 @@ function PaymentPage() {
 
   return (
     <main className="px-8">
-      <h2 className="text-4xl font-bold">Review Your Order</h2>
-      <div className="mt-4 grid grid-cols-4 gap-x-4">
-        {cart.map((item, index) => (
-          <CartItem key={index} item={item} />
-        ))}
-      </div>
-
       <div className="mt-4">
         <p>
           Total price:$

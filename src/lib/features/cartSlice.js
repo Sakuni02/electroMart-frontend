@@ -1,31 +1,89 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Api } from "../api";
 
-const initialState = {
-    cartItems: [],
-};
+// Load cart from MongoDB
+export const loadUserCart = createAsyncThunk(
+    "cart/loadUserCart",
+    async (_, { dispatch }) => {
+        const result = await dispatch(Api.endpoints.getCart.initiate());
+        return result.data;
+    }
+);
 
-export const cartSlice = createSlice({
+// Add item to MongoDB cart
+export const addItemToDB = createAsyncThunk(
+    "cart/addItemToDB",
+    async (productId, { dispatch }) => {
+        const result = await dispatch(Api.endpoints.addToCart.initiate(productId));
+        return result.data;
+    }
+);
+
+// Update quantity in MongoDB
+export const updateQuantityInDB = createAsyncThunk(
+    "cart/updateQuantityInDB",
+    async ({ productId, quantity }, { dispatch }) => {
+        const result = await dispatch(
+            Api.endpoints.updateCartQuantity.initiate({ productId, quantity })
+        );
+        return result.data;
+    }
+);
+
+// Remove item from MongoDB
+export const removeItemFromDB = createAsyncThunk(
+    "cart/removeItemFromDB",
+    async (productId, { dispatch }) => {
+        const result = await dispatch(
+            Api.endpoints.removeCartItem.initiate(productId)
+        );
+        return result.data;
+    }
+);
+
+
+const cartSlice = createSlice({
     name: "cart",
-    initialState,
+    initialState: {
+        cartItems: [],
+        loading: false,
+    },
+
     reducers: {
-        addToCart: (state, action) => {
-            const newItem = action.payload;
-            const foundItem = state.cartItems.find(
-                (el) => el.product._id === newItem._id
-            );
-            if (!foundItem) {
-                state.cartItems.push({ product: action.payload, quantity: 1 });
-                return;
-            }
-            foundItem.quantity += 1;
-        },
-        clearCart: () => {
-            state = [];
-        },
+        clearCartLocal(state) {
+            state.cartItems = [];
+        }
+    },
+
+    extraReducers: (builder) => {
+        builder
+
+            // Load cart
+            .addCase(loadUserCart.fulfilled, (state, action) => {
+                if (action.payload?.items) {
+                    state.cartItems = action.payload.items;
+                }
+            })
+
+            // Add item
+            .addCase(addItemToDB.fulfilled, (state, action) => {
+                state.cartItems = action.payload.items;
+            })
+
+            // Update quantity
+            .addCase(updateQuantityInDB.fulfilled, (state, action) => {
+                state.cartItems = action.payload.items;
+            })
+
+            // Remove item
+            .addCase(removeItemFromDB.fulfilled, (state, action) => {
+                state.cartItems = action.payload.items;
+            });
     },
 });
 
-// Action creators are generated for each case reducer function
-export const { addToCart, clearCart } = cartSlice.actions;
+// Export action
+export const { clearCartLocal } = cartSlice.actions;
 
 export default cartSlice.reducer;
+

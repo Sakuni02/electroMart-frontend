@@ -7,11 +7,14 @@ import { motion } from "framer-motion";
 import { useGetProductsByIdQuery } from "@/lib/api";
 import { useParams } from "react-router";
 import AddReviewDialog from "@/components/AddReviewDialog";
+import { useDispatch } from "react-redux";
+import { addItemToDB } from "@/lib/features/cartSlice";
 
 function SingleProductView() {
   const { id } = useParams();
   const { data: product, isLoading, isError } = useGetProductsByIdQuery(id);
 
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
 
   if (isLoading) return <p>Loading...</p>;
@@ -34,20 +37,20 @@ function SingleProductView() {
           <div className="flex flex-col-2 gap-2">
             <div className="col-span-1 space-y-2">
               {images.map((img, idx) => (
-                <motion.img
+                <motion.div
                   key={idx}
-                  src={img}
-                  alt={`Thumbnail ${idx + 1}`}
-                  className={`h-24 w-24 object-cover rounded-2xl cursor-pointer border-2 
-                  ${
-                    selectedImage === img
-                      ? "border-blue-500"
-                      : "border-transparent"
-                  }`}
+                  className={`w-20 h-20 rounded-2xl overflow-hidden border-2 cursor-pointer 
+      ${selectedImage === img ? "border-blue-500" : "border-transparent"}`}
                   onClick={() => setSelectedImage(img)}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
-                />
+                >
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
               ))}
             </div>
             <motion.div
@@ -55,12 +58,12 @@ function SingleProductView() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
-              className="col-span-1"
+              className="col-span-1 aspect-square rounded-2xl overflow-hidden"
             >
               <img
                 src={selectedImage || images[0]}
                 alt={product.name}
-                className="h-full w-full object-cover rounded-2xl shadow-lg"
+                className="h-full w-full object-cover"
               />
             </motion.div>
           </div>
@@ -104,7 +107,13 @@ function SingleProductView() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Button size="lg" className="w-full bg-blue-500">
+            <Button
+              size="lg"
+              className="w-full bg-blue-500"
+              onClick={() => {
+                dispatch(addItemToDB(product._id));
+              }}
+            >
               <ShoppingCart className="h-4 w-4" />
               Add to Cart
             </Button>

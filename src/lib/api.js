@@ -41,10 +41,6 @@ export const Api = createApi({
             providesTags: (result, error, id) => [{ type: "Product", id }],
         }),
 
-        // getProductsByCategory: build.query({
-        //     query: (slug) => `/products/shop/${slug}`,
-        // }),
-
         getFilteredProductsByCategory: build.query({
             query: ({ slug, colorId, minPrice, maxPrice }) => {
                 const params = new URLSearchParams();
@@ -93,6 +89,35 @@ export const Api = createApi({
         getCheckoutSessionStatus: build.query({
             query: (sessionId) => `/payments/session-status?session_id=${sessionId}`,
         }),
+
+        getCart: build.query({
+            query: () => `/cart`,
+        }),
+
+        addToCart: build.mutation({
+            query: (productId) => ({
+                url: `/cart/add`,
+                method: "POST",
+                body: { productId },
+            }),
+        }),
+
+        updateCartQuantity: build.mutation({
+            query: ({ productId, quantity }) => ({
+                url: `/cart/quantity`,
+                method: "PUT",
+                body: { productId, quantity },
+            }),
+        }),
+
+        removeCartItem: build.mutation({
+            query: (productId) => ({
+                url: `/cart/remove`,
+                method: "DELETE",
+                body: { productId },
+            }),
+        }),
+
     }),
 });
 
@@ -103,9 +128,12 @@ export const {
     useGetAllCategoriesQuery,
     useGetProductsByIdQuery,
     useGetFilteredProductsByCategoryQuery,
-    // useGetProductsByCategoryQuery,
     useCreateOrderMutation,
     useCreateProductMutation,
     useCreateBrandMutation,
     useCreateReviewMutation,
-    useGetCheckoutSessionStatusQuery } = Api;
+    useGetCheckoutSessionStatusQuery,
+    useGetCartQuery,
+    useAddToCartMutation,
+    useUpdateCartQuantityMutation,
+    useRemoveCartItemMutation } = Api;

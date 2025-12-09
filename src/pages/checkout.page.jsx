@@ -12,6 +12,11 @@ function CheckoutPage() {
     return <Navigate to="/" />;
   }
 
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
+
   return (
     <div className="container lg:px-25">
       <div className="flex gap-2 justify-start items-center mt-12">
@@ -44,7 +49,7 @@ function CheckoutPage() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
               <span>Subtotal</span>
-              <span>Subtotal</span>
+              <span>LKR {subtotal.toLocaleString()}</span>
             </div>
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
@@ -56,7 +61,7 @@ function CheckoutPage() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2 text-lg font-semibold">
               <span>Total</span>
-              <span>LKR 650000</span>
+              <span>LKR {subtotal.toLocaleString()}</span>
             </div>
           </div>
         </div>

@@ -107,7 +107,7 @@ function CategoryView() {
                   <button
                     key={c._id}
                     onClick={() => setSelectedColor(c._id)}
-                    className={`w-8 h-8 rounded-full border transition 
+                    className={`w-8 h-8 rounded-full border transition border-white
         ${selectedColor === c._id ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
                     style={{ backgroundColor: c.hex }}
                     aria-label={c.name}

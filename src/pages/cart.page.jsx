@@ -7,8 +7,13 @@ import { Link } from "react-router";
 function Cart() {
   const cart = useSelector((state) => state.cart.cartItems);
 
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
+
   return (
-    <div className="container lg:px-25">
+    <div className="container lg:px-25 mb-8">
       <div className="flex gap-2 justify-start items-center mt-4">
         <Button variant="ghost" size="icon">
           <ArrowLeft className="h-5 w-5" />
@@ -17,7 +22,7 @@ function Cart() {
         <div>
           <h1 className="text-4xl font-bold">Shopping Cart</h1>
           <h1 className="text-lg text-muted-foreground mt-2">
-            2 items in your cart
+            {cart.length} items in your cart
           </h1>
         </div>
       </div>
@@ -35,7 +40,7 @@ function Cart() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
               <span>Subtotal</span>
-              <span>Subtotal</span>
+              <span>LKR {subtotal.toLocaleString()}</span>
             </div>
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
@@ -47,7 +52,7 @@ function Cart() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2 text-lg font-semibold">
               <span>Total</span>
-              <span>LKR 650000</span>
+              <span>LKR {subtotal.toLocaleString()}</span>
             </div>
 
             {cart.length > 0 ? (
