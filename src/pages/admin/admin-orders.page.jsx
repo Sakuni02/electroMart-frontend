@@ -10,81 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-
-const invoices = [
-  {
-    invoice: "INV001",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    Customer: "John Doe",
-    Date: "Nov 20, 2024",
-    Items: "1",
-    Status: "Delivered",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { useGetAllOrdersQuery } from "@/lib/api";
 
 function adminOrders() {
+  const { data: ordersWithUser, isLoading, isError } = useGetAllOrdersQuery();
+  if (isLoading) return <div>Loading orders...</div>;
+  if (isError) return <div>Failed to load orders</div>;
+
   return (
     <div className="min-h-screen lg:px-30 px-5 mb-5">
       <div className="flex-col justify-start gap-2 mt-5">
@@ -100,6 +32,7 @@ function adminOrders() {
             <TableRow>
               <TableHead className="font-semibold">Order ID</TableHead>
               <TableHead className="font-semibold">Customer</TableHead>
+              <TableHead className="font-semibold">Address</TableHead>
               <TableHead className="font-semibold">Date</TableHead>
               <TableHead className="font-semibold">Items</TableHead>
               <TableHead className="font-semibold">Status</TableHead>
@@ -107,50 +40,87 @@ function adminOrders() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium py-6 px-2">
-                  {invoice.invoice}
-                </TableCell>
-                <TableCell>
-                  <div>
-                    <div className="font-medium">John Doe</div>
-                    <div className="text-sm text-muted-foreground">
-                      johndoe@gmail.com
+            {ordersWithUser.map((order) => {
+              const total = order.items.reduce(
+                (sum, item) =>
+                  sum + (item.productId?.price || 0) * item.quantity,
+                0
+              );
+
+              return (
+                <TableRow key={order._id}>
+                  <TableCell className="font-medium py-6 px-2">
+                    {order._id}
+                  </TableCell>
+                  <TableCell>
+                    <div>
+                      <div className="font-medium">
+                        {order.user?.fullName || "N/A"}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {order.user?.email || "N/A"}
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell>{invoice.Date}</TableCell>
-                <TableCell>{invoice.Items}</TableCell>
-                <TableCell>
-                  <Badge
-                    className={
-                      "bg-green-400/20 text-green-500 border-green-500/30"
-                    }
-                  >
-                    <CircleCheckBig /> {invoice.paymentStatus}
-                  </Badge>
-                  <Badge
-                    className={
-                      "bg-blue-400/20 text-blue-500 border-blue-500/30"
-                    }
-                  >
-                    <Truck /> {invoice.paymentStatus}
-                  </Badge>
-                  <Badge
-                    className={
-                      "bg-yellow-400/20 text-yellow-500 border-yellow-500/30"
-                    }
-                  >
-                    <Clock4 />
-                    {invoice.paymentStatus}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  {invoice.totalAmount}
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell>
+                    {order.address ? (
+                      <div className="flex flex-col text-sm text-muted-foreground">
+                        <span>{order.address.line_1}</span>
+                        {order.address.line_2 && (
+                          <span>{order.address.line_2}</span>
+                        )}
+                        <span>{order.address.city}</span>
+                        <span>Phone: {order.address.phone}</span>
+                      </div>
+                    ) : (
+                      "N/A"
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {order.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString()
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>{order.items.length}</TableCell>
+
+                  <TableCell>
+                    {order.orderStatus === "PENDING" && (
+                      <Badge
+                        className={
+                          "bg-yellow-400/20 text-yellow-500 border-yellow-500/30"
+                        }
+                      >
+                        <Clock4 />
+                        {order.paymentStatus}
+                      </Badge>
+                    )}
+
+                    {order.orderStatus === "FULFILLED" && (
+                      <Badge
+                        className={
+                          "bg-blue-400/20 text-blue-500 border-blue-500/30"
+                        }
+                      >
+                        <Truck /> {order.paymentStatus}
+                      </Badge>
+                    )}
+
+                    {order.orderStatus === "PAID" && (
+                      <Badge
+                        className={
+                          "bg-green-400/20 text-green-500 border-green-500/30"
+                        }
+                      >
+                        <CircleCheckBig /> {order.paymentStatus}
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    ${total.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>

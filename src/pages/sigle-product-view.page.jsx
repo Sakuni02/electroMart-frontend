@@ -76,7 +76,7 @@ function SingleProductView() {
               {averageRating ? `(${averageRating})` : "(No reviews yet)"}
             </span>
           </div>
-          <span className="text-3xl font-bold">LKR {product.price}</span>
+          <span className="text-3xl font-bold">$ {product.price}</span>
           <div>
             <span className="font-medium">Available Colors:</span>
             <div className="mt-3 flex items-center gap-3">

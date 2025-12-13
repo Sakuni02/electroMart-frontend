@@ -67,7 +67,7 @@ function SimpleProductCard({ product }) {
             </div>
           </div>
 
-          <p className="mt-2 text-primary font-bold">LKR {product.price}</p>
+          <p className="mt-2 text-primary font-bold">$ {product.price}</p>
         </div>
       </div>
     </Link>

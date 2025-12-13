@@ -86,4 +86,3 @@ const cartSlice = createSlice({
 export const { clearCartLocal } = cartSlice.actions;
 
 export default cartSlice.reducer;
-

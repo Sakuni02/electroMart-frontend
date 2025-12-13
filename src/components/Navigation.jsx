@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useSelector } from "react-redux";
 import { SignedIn, UserButton, SignedOut } from "@clerk/clerk-react";
+import ProductSearchForm from "./ProductSearchForm";
 
 function Navigation() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -83,16 +84,8 @@ function Navigation() {
         </div>
 
         {/* Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <div className="relative w-full search-glow rounded-lg">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              className="pl-10"
-            />
-          </div>
-        </div>
+
+        <ProductSearchForm />
 
         {/* Desktop Icons */}
         <div className="hidden md:flex items-center gap-2">

@@ -117,6 +117,12 @@ export const Api = createApi({
                 body: { productId },
             }),
         }),
+        getAllOrders: build.query({
+            query: () => `/orders/admin`,
+        }),
+        getProductsBySearch: build.query({
+            query: (query) => `/products/search?search=${query}`,
+        }),
 
     }),
 });
@@ -136,4 +142,6 @@ export const {
     useGetCartQuery,
     useAddToCartMutation,
     useUpdateCartQuantityMutation,
-    useRemoveCartItemMutation } = Api;
+    useRemoveCartItemMutation,
+    useGetAllOrdersQuery,
+    useGetProductsBySearchQuery } = Api;

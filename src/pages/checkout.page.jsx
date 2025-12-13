@@ -49,7 +49,7 @@ function CheckoutPage() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
               <span>Subtotal</span>
-              <span>LKR {subtotal.toLocaleString()}</span>
+              <span>$ {subtotal.toLocaleString()}</span>
             </div>
 
             <div className="flex lg:flex-row-2 justify-between mt-2">
@@ -61,7 +61,7 @@ function CheckoutPage() {
 
             <div className="flex lg:flex-row-2 justify-between mt-2 text-lg font-semibold">
               <span>Total</span>
-              <span>LKR {subtotal.toLocaleString()}</span>
+              <span>$ {subtotal.toLocaleString()}</span>
             </div>
           </div>
         </div>
