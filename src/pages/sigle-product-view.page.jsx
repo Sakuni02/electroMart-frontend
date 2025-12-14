@@ -9,8 +9,13 @@ import { useParams } from "react-router";
 import AddReviewDialog from "@/components/AddReviewDialog";
 import { useDispatch } from "react-redux";
 import { addItemToDB } from "@/lib/features/cartSlice";
+import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router";
 
 function SingleProductView() {
+  const { isSignedIn } = useAuth();
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const { data: product, isLoading, isError } = useGetProductsByIdQuery(id);
 
@@ -111,6 +116,10 @@ function SingleProductView() {
               size="lg"
               className="w-full bg-blue-500"
               onClick={() => {
+                if (!isSignedIn) {
+                  navigate("/sign-in");
+                  return;
+                }
                 dispatch(addItemToDB(product._id));
               }}
             >

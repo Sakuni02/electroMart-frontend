@@ -67,7 +67,9 @@ const cartSlice = createSlice({
 
             // Add item
             .addCase(addItemToDB.fulfilled, (state, action) => {
-                state.cartItems = action.payload.items;
+                if (action.payload?.items) {
+                    state.cartItems = action.payload.items;
+                }
             })
 
             // Update quantity

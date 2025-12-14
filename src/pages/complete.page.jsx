@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { CircleCheckBig, Package, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 import CheckoutItem from "@/components/CheckoutItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useSearchParams } from "react-router";
 import { useGetCheckoutSessionStatusQuery } from "@/lib/api";
+import { useEffect, useRef } from "react";
+import { clearCartLocal } from "../lib/features/cartSlice";
 
 function OrderSuccess() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,6 +14,16 @@ function OrderSuccess() {
 
   const { data, isLoading, isError } =
     useGetCheckoutSessionStatusQuery(sessionId);
+
+  const dispatch = useDispatch();
+  const clearedRef = useRef(false);
+
+  useEffect(() => {
+    if (data?.status === "complete" && !clearedRef.current) {
+      dispatch(clearCartLocal());
+      clearedRef.current = true;
+    }
+  }, [data?.status, dispatch]);
 
   if (isLoading) {
     return <div>Loading...</div>;

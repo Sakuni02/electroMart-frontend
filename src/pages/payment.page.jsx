@@ -19,7 +19,7 @@ function PaymentPage() {
         <p>
           Total price:$
           {cart.reduce(
-            (acc, item) => acc + item.product.price * item.quality,
+            (acc, item) => acc + item.product.price * item.quantity,
             0
           )}
         </p>

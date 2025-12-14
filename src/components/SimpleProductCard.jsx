@@ -2,9 +2,13 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useDispatch } from "react-redux";
 import { addItemToDB } from "@/lib/features/cartSlice";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "@clerk/clerk-react";
 
 function SimpleProductCard({ product }) {
+  const { isSignedIn } = useAuth();
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const avgRating =
     product.reviews && product.reviews.length > 0
@@ -37,6 +41,12 @@ function SimpleProductCard({ product }) {
               onClick={(e) => {
                 e.preventDefault(); // stops the <Link> navigation
                 e.stopPropagation(); // prevents click from reaching parent
+
+                if (!isSignedIn) {
+                  navigate("/sign-in");
+                  return;
+                }
+
                 dispatch(addItemToDB(product._id));
               }}
             >
