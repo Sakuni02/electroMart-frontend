@@ -44,7 +44,8 @@ export const putImages = async ({ files }) => {
     const fileTypes = Array.from(files).map((file) => file.type || "application/octet-stream");
 
     // Request signed URLs for all files
-    const res = await fetch("http://localhost:8000/api/products/images", {
+    // const res = await fetch("http://localhost:8000/api/products/images", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/products/images`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fileTypes }),
