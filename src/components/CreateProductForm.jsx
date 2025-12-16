@@ -71,9 +71,9 @@ function CreateProductForm({ categories, brands, colors }) {
   };
 
   return (
-    <div className="flex-col justify-center items-center min-h-screen">
-      <div className="border-2 p-10 lg:px-15">
-        <h1 className="text-3xl mb-10 font-bold bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      <div className="border-2 p-4 sm:p-6 md:p-8 lg:p-10 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-4 sm:mx-6 md:mx-0">
+        <h1 className="text-2xl sm:text-3xl md:text-3xl mb-6 sm:mb-8 font-bold bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
           Create New Product
         </h1>
 
@@ -82,8 +82,8 @@ function CreateProductForm({ categories, brands, colors }) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 mt-4"
           >
-            <div className="flex gap-4">
-              <div className="w-1/3">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="w-full md:w-1/3">
                 <FormField
                   control={form.control}
                   name="categoryId"
@@ -114,7 +114,7 @@ function CreateProductForm({ categories, brands, colors }) {
                 />
               </div>
 
-              <div className="w-1/3">
+              <div className="w-full md:w-1/3">
                 <FormField
                   control={form.control}
                   name="colorId"
@@ -144,7 +144,7 @@ function CreateProductForm({ categories, brands, colors }) {
                 />
               </div>
 
-              <div className="w-1/3">
+              <div className="w-full md:w-1/3">
                 <FormField
                   control={form.control}
                   name="brandId"
@@ -220,8 +220,8 @@ function CreateProductForm({ categories, brands, colors }) {
               )}
             />
 
-            <div className="flex gap-4">
-              <div className="w-1/2">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="w-full md:w-1/2">
                 <FormField
                   control={form.control}
                   name="stock"
@@ -244,7 +244,7 @@ function CreateProductForm({ categories, brands, colors }) {
                 />
               </div>
 
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <FormField
                   control={form.control}
                   name="price"
@@ -272,7 +272,10 @@ function CreateProductForm({ categories, brands, colors }) {
             <div className="space-y-4">
               <FormLabel>Specifications</FormLabel>
               {fields.map((item, index) => (
-                <div key={item.id} className="flex gap-2 items-center">
+                <div
+                  key={item.id}
+                  className="flex flex-col sm:flex-row gap-2 items-start sm:items-center"
+                >
                   <Input
                     placeholder="Key (e.g., Material)"
                     {...form.register(`specifications.${index}.key`)}
@@ -294,6 +297,7 @@ function CreateProductForm({ categories, brands, colors }) {
               <Button
                 type="button"
                 variant="secondary"
+                className="w-full sm:w-auto"
                 onClick={() => append({ key: "", value: "" })}
               >
                 + Add Specification
@@ -302,7 +306,7 @@ function CreateProductForm({ categories, brands, colors }) {
 
             <div className="flex">
               <div>
-                <Button className="w-full" type="submit">
+                <Button className="w-full sm:w-auto" type="submit">
                   Create Product
                 </Button>
               </div>

@@ -34,7 +34,7 @@ function SimpleProductCard({ product }) {
             <Heart className="h-4 w-4" />
           </Button>
 
-          <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute bottom-3 left-3 right-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
             <Button
               variant="variant"
               className="w-full bg-blue-600"

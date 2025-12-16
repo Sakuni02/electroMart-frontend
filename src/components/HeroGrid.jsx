@@ -40,12 +40,12 @@ function HeroGrid() {
             asChild
             className="px-9 py-6 bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800"
           >
-            <a href="/category/smartphones">
+            <a href="/shop/smartphones">
               Shop Now <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </Button>
           <Button variant="secondary" size="lg" asChild className="px-9 py-6">
-            <a href="/category/accessories">Browse Accessories</a>
+            <a href="">Browse Accessories</a>
           </Button>
         </motion.div>
 

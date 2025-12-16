@@ -77,18 +77,19 @@ function Navigation() {
           })}
         </nav>
 
-        <div>
-          <Link to="/admin">
-            <h2 className="text-white">Admin Panel</h2>
-          </Link>
-        </div>
-
         {/* Search Bar */}
-
-        <ProductSearchForm />
+        <div className="hidden md:flex items-center gap-2">
+          <ProductSearchForm />
+        </div>
 
         {/* Desktop Icons */}
         <div className="hidden md:flex items-center gap-2">
+          <div>
+            <Link to="/admin">
+              <h2 className="text-white">Admin Panel</h2>
+            </Link>
+          </div>
+
           <Link to="/shop/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-6 w-6" />
@@ -154,12 +155,7 @@ function Navigation() {
       >
         <div className="px-8 pb-2 pt-5">
           <div className="relative w-full search-glow rounded-lg">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              className="pl-10"
-            />
+            <ProductSearchForm />
           </div>
         </div>
 
@@ -206,22 +202,53 @@ function Navigation() {
             to="/cart"
             className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-700"
             onClick={closeMobileMenu}
-          >
-            <Button variant="ghost" size="icon" className="relative">
+          ></Link>
+
+          <Button variant="ghost" size="icon" className="relative">
+            <Link to="/shop/cart">
               <ShoppingCart className="h-6 w-6" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
-                8
+                {cartItemCount}
               </Badge>
-            </Button>
+            </Link>
+          </Button>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+
+          <div className="md:hidden">
+            <SignedOut>
+              {" "}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center px-3 py-2 rounded-md border"
+                  >
+                    <User className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent>
+                  <Link to={"/sign-up"}>
+                    <DropdownMenuItem className="px-3 py-2">
+                      Sign Up
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link to={"/sign-in"}>
+                    <DropdownMenuItem className="px-3 py-2">
+                      Sign In
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SignedOut>
+          </div>
+
+          <Link to="/admin">
+            <h2 className="text-white">Admin Panel</h2>
           </Link>
-          <a
-            to="/user"
-            className="flex items-center gap-2 px-2 py-2 rounded-md"
-            onClick={closeMobileMenu}
-          >
-            <User className="h-5 w-5" />
-            Account
-          </a>
           <ThemeToggle />
         </div>
       </div>

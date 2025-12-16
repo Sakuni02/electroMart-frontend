@@ -38,13 +38,13 @@ function SingleProductView() {
   return (
     <div className="container">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[60vh] md:min-h-[80vh] items-center py-6">
-        <div className="relative col-span-1 px-8 lg:px-18">
-          <div className="flex flex-col-2 gap-2">
-            <div className="col-span-1 space-y-2">
+        <div className="relative col-span-1 px-4 md:px-8 lg:px-18">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex md:flex-col gap-2 order-2 md:order-1">
               {images.map((img, idx) => (
                 <motion.div
                   key={idx}
-                  className={`w-20 h-20 rounded-2xl overflow-hidden border-2 cursor-pointer 
+                  className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden border-2 cursor-pointer 
       ${selectedImage === img ? "border-blue-500" : "border-transparent"}`}
                   onClick={() => setSelectedImage(img)}
                   whileHover={{ scale: 1.05 }}
@@ -63,7 +63,7 @@ function SingleProductView() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
-              className="col-span-1 aspect-square rounded-2xl overflow-hidden"
+              className="order-1 md:order-2 aspect-square rounded-2xl overflow-hidden"
             >
               <img
                 src={selectedImage || images[0]}
@@ -73,15 +73,17 @@ function SingleProductView() {
             </motion.div>
           </div>
         </div>
-        <div className="col-span-1 px-8 lg:px-10 gap-4 flex flex-col">
-          <h1 className="text-3xl font-bold">{product.name}</h1>
+        <div className="col-span-1 px-4 md:px-8 lg:px-10 gap-4 flex flex-col">
+          <h1 className="text-2xl md:text-3xl font-bold">{product.name}</h1>
           <div className="flex gap-2 items-center">
             <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
             <span className="text-sm text-muted-foreground">
               {averageRating ? `(${averageRating})` : "(No reviews yet)"}
             </span>
           </div>
-          <span className="text-3xl font-bold">$ {product.price}</span>
+          <span className="text-2xl md:text-3xl font-bold">
+            $ {product.price}
+          </span>
           <div>
             <span className="font-medium">Available Colors:</span>
             <div className="mt-3 flex items-center gap-3">
@@ -103,7 +105,7 @@ function SingleProductView() {
                 <Button variant="ghost" size="icon">
                   <Minus className="h-4 w-4" />
                 </Button>
-                <span className="px-4 py-2 min-w-[60px] text-center">5</span>
+                <span className="px-6 py-3 min-w-[64px] text-center">5</span>
                 <Button variant="ghost" size="icon">
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -142,7 +144,7 @@ function SingleProductView() {
             <TabsTrigger value="specifications">Specifications</TabsTrigger>
             <TabsTrigger value="reviews">Reviews</TabsTrigger>
           </TabsList>
-          <TabsContent value="description" className="p-8">
+          <TabsContent value="description" className="p-4 md:p-8">
             <p className="text-lg text-muted-foreground">
               {product.description}
             </p>
@@ -174,7 +176,7 @@ function SingleProductView() {
             </div>
           </TabsContent>
           <TabsContent value="reviews" className="mt-6">
-            <div className="text-center py-8 px-4 flex flex-col items-start gap-4">
+            <div className="py-6 px-4 flex flex-col gap-4 md:items-start">
               <AddReviewDialog productId={product._id} />
             </div>
 
