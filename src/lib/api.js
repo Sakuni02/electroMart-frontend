@@ -124,6 +124,9 @@ export const Api = createApi({
         getProductsBySearch: build.query({
             query: (query) => `/products/search?search=${query}`,
         }),
+        getSalesDashboard: build.query({
+            query: () => `orders/admin/sales`,
+        })
 
     }),
 });
@@ -145,4 +148,5 @@ export const {
     useUpdateCartQuantityMutation,
     useRemoveCartItemMutation,
     useGetAllOrdersQuery,
-    useGetProductsBySearchQuery } = Api;
+    useGetProductsBySearchQuery,
+    useGetSalesDashboardQuery } = Api;

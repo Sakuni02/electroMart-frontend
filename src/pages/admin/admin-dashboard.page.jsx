@@ -15,13 +15,13 @@ function adminDashboard() {
           </div>
         </Link>
 
-        <div className="border rounded-2xl p-6 hover:border-blue-600 transition-all cursor-pointer">
+        {/* <div className="border rounded-2xl p-6 hover:border-blue-600 transition-all cursor-pointer">
           <div className="flex items-center justify-center w-14 h-14 rounded-lg border mb-3 bg-blue-950">
             <Package className="w-7 h-7 text-blue-500" />
           </div>
           <h1 className="text-2xl font-semibold mb-3">Manage Products</h1>
           <p className="text-gray-400">View and edit existing products</p>
-        </div>
+        </div> */}
 
         <Link to="/admin/orders">
           <div className="border rounded-2xl p-6 hover:border-blue-600 transition-all cursor-pointer">
