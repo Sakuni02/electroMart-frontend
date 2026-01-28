@@ -82,10 +82,10 @@ function CategoryView() {
             </div>
             <div>
               <Slider.Root
-                value={[maxPrice ?? 200000]} // wrap number in array
+                value={[maxPrice ?? 2000]} // wrap number in array
                 onValueChange={(value) => setMaxPrice(value[0])} // Radix always sends array
                 min={0}
-                max={200000}
+                max={2000}
                 step={50}
                 className="relative flex items-center select-none touch-none w-full h-5"
               >

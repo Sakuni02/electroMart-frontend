@@ -52,7 +52,7 @@ export const putImages = async ({ files }) => {
     });
 
     const data = await res.json();
-    const { uploads } = data; // uploads = [{url, publicURL}, ...]
+    const { uploads } = data;
 
     // Upload each file to R2
     await Promise.all(
